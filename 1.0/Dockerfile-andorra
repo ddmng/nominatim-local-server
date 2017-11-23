@@ -1,0 +1,9 @@
+FROM rdaneel/nominatim:base
+
+ENV PBF_DATA http://download.geofabrik.de/europe/andorra-latest.osm.pbf
+# Load initial data
+RUN curl $PBF_DATA --create-dirs -o /app/src/data.osm.pbf
+RUN service postgresql start && sudo -u nominatim ./src/utils/setup.php --osm-file /app/src/data.osm.pbf --all --threads 2
+
+COPY start.sh /app/start.sh
+CMD /app/start.sh

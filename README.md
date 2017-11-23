@@ -1,4 +1,4 @@
-# Nominatim Docker for Italy
+# Nominatim Docker image
 
 Forked from https://github.com/mediagis/nominatim-docker/tree/master/2.5
 
@@ -16,7 +16,7 @@ If a different country should be used you can set `PBF_DATA` on build.
 1. Clone repository
 
   ```
-  # https://github.com/ddmng/nominatim-local-server.git
+  # git clone https://github.com/ddmng/nominatim-local-server.git
   # cd nominatim-local-server/1.0
   ```
 
@@ -25,21 +25,22 @@ If a different country should be used you can set `PBF_DATA` on build.
   ```
   ENV PBF_DATA http://download.geofabrik.de/europe/italy-latest.osm.pbf
   ```
-3. Configure incrimental update. By default CONST_Replication_Url configured for Italy.
+3. Configure incremental update (NOT TESTED). By default CONST_Replication_Url configured for Italy.
 If you want a different update source, you will need to declare `CONST_Replication_Url` in local.php. Documentation [here] (https://github.com/twain47/Nominatim/blob/master/docs/Import_and_update.md#updates). For example, to use the daily country extracts diffs for Gemany from geofabrik add the following:
   ```
   @define('CONST_Replication_Url', 'http://download.geofabrik.de/europe/germany-updates');
   ```
 
-4. Build 
+4. Build
 
   ```
-  docker build -t nominatim-local-server .
+  make build-base
+  make build-andorra
   ```
 5. Run
 
   ```
-  docker run --restart=always -d -p 8080:8080 --name nominatim-italy nominatim-local-server
+  make run-andorra
   ```
   If this succeeds, open [http://localhost:8080/](http:/localhost:8080) in a web browser
 
